@@ -1,0 +1,132 @@
+.comment {
+  padding: 24px;
+  background-color: #fff;
+  display: grid;
+  grid-template-columns: 5% 1fr;
+  column-gap: 24px;
+  border-radius: 8px;
+}
+
+.scoreContainer {
+  padding: 12px 0;
+  width: 100%;
+  height: 100px;
+  border-radius: 10px;
+  background-color: #f5f6fa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.voteButton {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  color: var(--Light-Grayish-Blue, #c5c6ef);
+  font-weight: 500;
+  padding: 0 8px;
+  cursor: pointer;
+  &:hover {
+    color: #5357b6;
+    transition: 0.3s;
+  }
+}
+
+.score {
+  margin: 0;
+  padding: 19px 0;
+  color: var(--Moderate-Blue, #5357b6);
+  text-align: center;
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.headerCommentContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: space-between;
+  grid-column: 2/3;
+}
+
+.headerInfoContainer {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  align-items: center;
+  justify-content: start;
+  column-gap: 16px;
+}
+
+.profileImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 32px;
+}
+
+.username {
+  margin: 0;
+  color: var(--Dark-Blue, #334253);
+  font-feature-settings: "liga" off, "clig" off;
+  /* Heading (M) */
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.createdAt {
+  margin: 0;
+  color: var(--Grayish-Blue, #67727e);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* Body (M) */
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+.replyButton {
+  border: none;
+  background-color: transparent;
+  color: var(--Moderate-Blue, #5357b6);
+  font-feature-settings: "liga" off, "clig" off;
+  /* Body (M Bold) */
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  cursor: pointer;
+  &:hover {
+    opacity: 0.5;
+    transition: 0.3s;
+  }
+}
+
+.replyIcon {
+  position: relative;
+  padding: 0 8px 0 0;
+  top: 3px;
+}
+
+.commentText {
+  padding-top: 15px;
+  margin: 0;
+  color: var(--Grayish-Blue, #67727e);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* Body (M) */
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
