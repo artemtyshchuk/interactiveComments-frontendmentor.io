@@ -14,9 +14,9 @@ export type CommentsType = {
   createdAt: string;
   score: number;
   user: UserType;
+  replyingTo?: string;
   replies?: CommentsType[];
 };
-
 
 export type DataType = {
   currentUser: UserType;
