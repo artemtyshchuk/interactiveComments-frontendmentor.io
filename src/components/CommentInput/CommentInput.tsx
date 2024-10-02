@@ -1,6 +1,7 @@
 import { CommentsType, UserType } from "types";
 import styles from "./CommentInput.module.scss";
 import React, { useState } from "react";
+import { MainButton } from "components/MainButton";
 
 interface CommentInputProps extends UserType {
   onSubmit: (newComment: CommentsType) => void;
@@ -55,11 +56,7 @@ export const CommentInput = ({
     }
   };
 
-  const disabledButton = () => {
-    if (!comment || comment.length < 5) {
-      return true;
-    }
-  };
+  const disabledButton = !comment || comment.length < 5;
 
   return (
     <form className={styles.commentInput} onSubmit={fetchNewComment}>
@@ -71,17 +68,13 @@ export const CommentInput = ({
           placeholder="Add a comment..."
           className={styles.input}
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+            setComment(event.target.value)
+          }
         />
       </div>
       <div className={styles.sendButtonContainer}>
-        <button
-          type="submit"
-          className={styles.sendButton}
-          disabled={disabledButton()}
-        >
-          Send
-        </button>
+        <MainButton mainButtonText="SEND" disabledButton={disabledButton} type="submit" />
       </div>
     </form>
   );

@@ -36,6 +36,32 @@ export const CommentsList = () => {
 
   const { image, username } = currentUser;
 
+  const handleCommentDelete = (id: number) => {
+    const deleteContent = (comments: CommentsType[]): CommentsType[] => {
+      return comments
+        .filter((comment) => comment.id !== id)
+        .map((comment) => ({
+          ...comment,
+          replies: deleteContent(comment.replies || []),
+        }));
+    };
+    const updateComments = deleteContent(comments);
+    setComments(updateComments);
+  };
+
+  const handleCommentEdit = (id: number, updatedComment: string) => {
+    const editComment = (comments: CommentsType[]): CommentsType[] => {
+      return comments.map((comment) => {
+        if (comment.id === id) {
+          return { ...comment, content: updatedComment };
+        }
+        return { ...comment, replies: editComment(comment.replies || []) };
+      });
+    };
+    const updateComments = editComment(comments);
+    setComments(updateComments);
+  };
+
   return (
     <div className={styles.commentsList}>
       {comments.map((comment) => {
@@ -55,7 +81,10 @@ export const CommentsList = () => {
             createdAt={formattedTime}
             score={comment.score}
             user={comment.user}
+            currentUser={currentUser.username}
             replies={comment.replies}
+            onDelete={handleCommentDelete}
+            onEdit={handleCommentEdit}
           />
         );
       })}

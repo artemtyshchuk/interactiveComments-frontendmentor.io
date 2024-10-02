@@ -51,6 +51,11 @@
   }
 }
 
+.voted {
+  color: #5357b6;
+  transition: 0.3s;
+}
+
 .score {
   margin: 0;
   padding: 19px 0;
@@ -66,18 +71,18 @@
 .headerCommentContainer {
   width: 100%;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 81% 19%;
   align-items: center;
   justify-content: space-between;
   grid-column: 2/3;
 }
 
 .headerInfoContainer {
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: start;
-  column-gap: 16px;
+  gap: 16px;
 }
 
 .profileImage {
@@ -98,12 +103,23 @@
   line-height: normal;
 }
 
+.youFlag {
+  padding: 2px 6px;
+  border-radius: 2px;
+  background: var(--Moderate-Blue, #5357b6);
+  color: var(--White, #fff);
+  font-family: Rubik;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
 .createdAt {
   margin: 0;
   color: var(--Grayish-Blue, #67727e);
   font-feature-settings: "liga" off, "clig" off;
 
-  /* Body (M) */
   font-family: Rubik;
   font-size: 16px;
   font-style: normal;
@@ -111,12 +127,26 @@
   line-height: 24px; /* 150% */
 }
 
+.replyButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-self: end;
+  gap: 23px;
+}
+
+.updateButtonContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
 .replyButton {
+  justify-self: flex-end;
   border: none;
   background-color: transparent;
   color: var(--Moderate-Blue, #5357b6);
   font-feature-settings: "liga" off, "clig" off;
-  /* Body (M Bold) */
+
   font-family: Rubik;
   font-size: 16px;
   font-style: normal;
@@ -136,7 +166,10 @@
 }
 
 .contentCommentContainer {
-  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: auto;
 }
 
 .commentText {
@@ -164,4 +197,30 @@
   font-style: normal;
   font-weight: 400;
   line-height: 24px; /* 150% */
+}
+
+.input {
+  margin-top: 15px;
+  box-sizing: border-box;
+  padding: 12px 24px;
+  width: 100%;
+  height: 100px;
+  color: var(--Grayish-Blue, #67727e);
+  font-feature-settings: "liga" off, "clig" off;
+  border-radius: 8px;
+  border: 1px solid var(--Moderate-Blue, #5357b6);
+
+  /* Body (M) */
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  resize: none;
+  outline: none;
+  caret-color: var(--Moderate-Blue, #5357b6);
+
+  &:focus {
+    border: 1px solid var(--Moderate-Blue, #5357b6);
+  }
 }

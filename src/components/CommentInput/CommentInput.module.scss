@@ -1,7 +1,7 @@
 .commentInput {
-  margin-top: 20px;
+  // margin-top: 20px;
   display: grid;
-  grid-template-columns: 5% 1fr 10%;
+  grid-template-columns: 5% 1fr 12%;
   column-gap: 16px;
   padding: 24px;
   align-items: start;
@@ -35,24 +35,10 @@
   font-weight: 400;
   line-height: 24px; /* 150% */
   resize: none;
-}
+  outline: none;
+  caret-color: var(--Moderate-Blue, #5357b6);
 
-.sendButton {
-  width: 100%;
-  height: 48px;
-  border-radius: 8px;
-  border: none;
-  background: var(--Moderate-Blue, #5357b6);
-
-  color: var(--White, #fff);
-  font-feature-settings: "liga" off, "clig" off;
-
-  /* Body (M Bold) */
-  font-family: Rubik;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px; /* 150% */
-  text-transform: uppercase;
-  cursor: pointer;
+  &:focus {
+    border: 1px solid var(--Moderate-Blue, #5357b6);
+  }
 }

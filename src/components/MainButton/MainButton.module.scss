@@ -1,0 +1,25 @@
+.mainButton {
+  width: 100%;
+  max-width: 131px;
+  height: 48px;
+  border-radius: 8px;
+  border: none;
+  background: var(--Moderate-Blue, #5357b6);
+
+  color: var(--White, #fff);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* Body (M Bold) */
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    transition: 0.3s;
+    opacity: 0.8;
+  }
+}
