@@ -161,7 +161,7 @@ export const Comment = ({
               currentUser={currentUser}
               replyingTo={reply.replyingTo}
               onDelete={handleDelete}
-              onEdit={handleEdit}
+              onEdit={onEdit}
             />
           ))}
         </div>
