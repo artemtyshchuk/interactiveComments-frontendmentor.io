@@ -1,10 +1,9 @@
 import { CommentsType } from "types";
 import styles from "./Comment.module.scss";
-import { ReactComponent as ReplyIcon } from "../../assets/images/icon-reply.svg";
-import { ReactComponent as DeleteIcon } from "assets/images/icon-delete.svg";
-import { ReactComponent as EditIcon } from "assets/images/icon-edit.svg";
 import { useState } from "react";
 import { MainButton } from "components/MainButton";
+import { AlternativeButton } from "components/AlternativeButton";
+import { VoteButton } from "components/VoteButton";
 
 interface CommentProps extends CommentsType {
   currentUser: string;
@@ -46,7 +45,7 @@ export const Comment = ({
   };
 
   const handleEdit = () => {
-    setEditMode(true);
+    setEditMode(!editMode);
   };
 
   const handleUpdate = () => {
@@ -64,23 +63,9 @@ export const Comment = ({
     <div className={styles.commentContainer}>
       <div className={styles.comment}>
         <div className={styles.scoreContainer}>
-          <button
-            className={`${styles.voteButton} ${voted && styles.voted}`}
-            onClick={handleVote}
-            disabled={voted}
-          >
-            +
-          </button>
+          <VoteButton content="+" onClick={handleVote} voted={voted} />
           <p className={styles.score}>{scoreState}</p>
-          <button
-            className={`${styles.voteButton} ${
-              voted && styles.voteButton__active
-            }`}
-            onClick={handleVote}
-            disabled={!voted}
-          >
-            -
-          </button>
+          <VoteButton content="-" onClick={handleVote} voted={!voted} />
         </div>
 
         <div className={styles.headerCommentContainer}>
@@ -97,25 +82,22 @@ export const Comment = ({
           <div className={styles.replyButtonContainer}>
             {username === currentUser ? (
               <>
-                <button
-                  className={styles.replyButton}
-                  style={{ color: "#ED6368" }}
+                <AlternativeButton
+                  AlternativeButtonText="Delete"
                   onClick={() => handleDelete(id)}
-                >
-                  <DeleteIcon style={{ paddingRight: "8px" }} />
-                  Delete
-                </button>
-                <button className={styles.replyButton} onClick={handleEdit}>
-                  <EditIcon style={{ paddingRight: "8px" }} />
-                  Edit
-                </button>
+                />
+
+                <AlternativeButton
+                  AlternativeButtonText="Edit"
+                  onClick={handleEdit}
+                />
               </>
             ) : (
               <>
-                <button className={styles.replyButton}>
-                  <ReplyIcon className={styles.replyIcon} />
-                  Reply
-                </button>
+                <AlternativeButton
+                  AlternativeButtonText="Reply"
+                  onClick={() => {}}
+                />
               </>
             )}
           </div>
@@ -138,8 +120,7 @@ export const Comment = ({
               </>
             ) : replyingTo ? (
               <div className={styles.commentText}>
-                {" "}
-                <span className={styles.replyingTo}>@{replyingTo}</span>{" "}
+                <span className={styles.replyingTo}>@{replyingTo}</span>
                 {editedComment}
               </div>
             ) : (

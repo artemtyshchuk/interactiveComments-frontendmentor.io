@@ -12,7 +12,6 @@ export const MainButton = ({
   onClick,
   type,
 }: MainButtonProps) => {
-  console.log("Button type:", type);
   return (
     <button
       type={type}

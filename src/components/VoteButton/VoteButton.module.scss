@@ -1,0 +1,18 @@
+.voteButton {
+  border: none;
+  background-color: transparent;
+  font-size: 20px;
+  color: var(--Light-Grayish-Blue, #c5c6ef);
+  font-weight: 500;
+  padding: 0 8px;
+  cursor: pointer;
+  &:hover {
+    color: #5357b6;
+    transition: 0.3s;
+  }
+}
+
+.voted {
+  color: #5357b6;
+  transition: 0.3s;
+}
