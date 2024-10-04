@@ -62,6 +62,44 @@ export const CommentsList = () => {
     setComments(updateComments);
   };
 
+  const handleReply = (
+    commentId: number,
+    replyText: string,
+    replyingTo: string
+  ) => {
+    const addReply = (comments: CommentsType[]): CommentsType[] => {
+      return comments.map((comment) => {
+        if (comment.id === commentId) {
+          console.log(`Добавление ответа к комментарию с id: ${commentId}`);
+          const newReply: CommentsType = {
+            id: Date.now(),
+            content: `@${replyingTo} ${replyText}`,
+            createdAt: new Date().toISOString(),
+            score: 0,
+            user: currentUser,
+            replies: [],
+          };
+          return {
+            ...comment,
+            replies: [...(comment.replies || []), newReply],
+          };
+        }
+
+        if (comment.replies && comment.replies.length > 0) {
+          return {
+            ...comment,
+            replies: addReply(comment.replies),
+          };
+        }
+
+        return comment;
+      });
+    };
+
+    const updatedComments = addReply(comments);
+    setComments(updatedComments);
+  };
+
   return (
     <div className={styles.commentsList}>
       {comments.map((comment) => {
@@ -73,6 +111,24 @@ export const CommentsList = () => {
             })
           : comment.createdAt;
 
+        const formatReplies = (replies: CommentsType[]): CommentsType[] => {
+          return replies.map((reply) => {
+            const replyCreatedAtDate = new Date(reply.createdAt);
+            const formattedReplyTime = !isNaN(replyCreatedAtDate.getTime())
+              ? formatDistanceToNow(replyCreatedAtDate, {
+                  addSuffix: true,
+                  locale: enUS,
+                })
+              : reply.createdAt;
+
+            return {
+              ...reply,
+              createdAt: formattedReplyTime,
+              replies: formatReplies(reply.replies || []),
+            };
+          });
+        };
+
         return (
           <Comment
             key={comment.id}
@@ -81,10 +137,11 @@ export const CommentsList = () => {
             createdAt={formattedTime}
             score={comment.score}
             user={comment.user}
-            currentUser={currentUser.username}
-            replies={comment.replies}
+            currentUser={currentUser}
+            replies={formatReplies(comment.replies || [])}
             onDelete={handleCommentDelete}
             onEdit={handleCommentEdit}
+            onReply={handleReply}
           />
         );
       })}

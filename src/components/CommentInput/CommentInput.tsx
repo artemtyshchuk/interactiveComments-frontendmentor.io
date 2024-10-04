@@ -56,8 +56,6 @@ export const CommentInput = ({
     }
   };
 
-  const disabledButton = !comment || comment.length < 5;
-
   return (
     <form className={styles.commentInput} onSubmit={fetchNewComment}>
       <div className={styles.userImageContainer}>
@@ -74,7 +72,7 @@ export const CommentInput = ({
         />
       </div>
       <div className={styles.sendButtonContainer}>
-        <MainButton mainButtonText="SEND" disabledButton={disabledButton} type="submit" />
+        <MainButton mainButtonText="SEND" content={comment} type="submit" />
       </div>
     </form>
   );

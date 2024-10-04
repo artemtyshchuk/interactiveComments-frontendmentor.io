@@ -181,3 +181,13 @@
   justify-content: flex-end;
   width: 100%;
 }
+
+.replyInputContainer {
+  display: grid;
+  grid-template-columns: 5% 1fr 12%;
+  column-gap: 16px;
+  margin-top: 20px;
+  border-radius: 8px;
+  padding: 24px;
+  background-color: white;
+}
