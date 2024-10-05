@@ -4,6 +4,9 @@ import React, { useState } from "react";
 import { MainButton } from "components/MainButton";
 import { AlternativeButton } from "components/AlternativeButton";
 import { VoteButton } from "components/VoteButton";
+import { TextArea } from "components/TextArea";
+import { UserImage } from "components/UserImage";
+import { ModalDelete } from "components/ModalDelete";
 
 interface CommentProps extends CommentsType {
   currentUser: UserType;
@@ -35,38 +38,16 @@ export const Comment = ({
   const [editMode, setEditMode] = useState<boolean>(false);
   const [replyMode, setReplyMode] = useState<boolean>(false);
   const [replyText, setReplyText] = useState<string>("");
+  const [modalDelete, setModalDelete] = useState<boolean>(false);
 
   const handleVote = () => {
-    if (!voted) {
-      setScoreState(scoreState + 1);
-      setVoted(true);
-    } else {
-      setScoreState(scoreState - 1);
-      setVoted(false);
-    }
-  };
-
-  const handleDelete = (id: number) => {
-    onDelete(id);
-  };
-
-  const handleEdit = () => {
-    setEditMode(!editMode);
+    setScoreState((prevScore) => (voted ? prevScore - 1 : prevScore + 1));
+    setVoted((prevVoted) => !prevVoted);
   };
 
   const handleUpdate = () => {
     onEdit(id, editedComment);
     setEditMode(false);
-  };
-
-  const handleEditInputChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setEditedComment(event.target.value);
-  };
-
-  const handleReply = () => {
-    setReplyMode(!replyMode);
   };
 
   const handleReplySubmit = () => {
@@ -75,14 +56,14 @@ export const Comment = ({
     setReplyText("");
   };
 
-  const handleReplyTextChange = (
-    event: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setReplyText(event.target.value);
-  };
-
   return (
     <div className={styles.commentContainer}>
+      {modalDelete && (
+        <ModalDelete
+          handleCancelDelete={() => setModalDelete(false)}
+          handleDelete={() => onDelete(id)}
+        />
+      )}
       <div className={styles.comment}>
         <div className={styles.scoreContainer}>
           <VoteButton content="+" onClick={handleVote} voted={voted} />
@@ -92,11 +73,7 @@ export const Comment = ({
 
         <div className={styles.headerCommentContainer}>
           <div className={styles.headerInfoContainer}>
-            <img
-              src={image.png}
-              alt="profileImage"
-              className={styles.profileImage}
-            />
+            <UserImage image={image.png} alt="userImage" />
             <p className={styles.username}>{username}</p>
             {username === currentUserUsername && (
               <p className={styles.youFlag}>you</p>
@@ -108,31 +85,29 @@ export const Comment = ({
               <>
                 <AlternativeButton
                   AlternativeButtonText="Delete"
-                  onClick={() => handleDelete(id)}
+                  onClick={() => setModalDelete(true)}
                 />
-
                 <AlternativeButton
                   AlternativeButtonText="Edit"
-                  onClick={handleEdit}
+                  onClick={() => setEditMode((prevState) => !prevState)}
                 />
               </>
             ) : (
-              <>
-                <AlternativeButton
-                  AlternativeButtonText="Reply"
-                  onClick={handleReply}
-                />
-              </>
+              <AlternativeButton
+                AlternativeButtonText="Reply"
+                onClick={() => setReplyMode((prevState) => !prevState)}
+              />
             )}
           </div>
 
           <div className={styles.contentCommentContainer}>
             {editMode ? (
               <>
-                <textarea
-                  className={styles.input}
+                <TextArea
                   value={editedComment}
-                  onChange={handleEditInputChange}
+                  onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                    setEditedComment(event.target.value)
+                  }
                 />
                 <div className={styles.updateButtonContainer}>
                   <MainButton
@@ -145,7 +120,7 @@ export const Comment = ({
               </>
             ) : replyingTo ? (
               <div className={styles.commentText}>
-                <span className={styles.replyingTo}>@{replyingTo}</span>
+                <span className={styles.replyingTo}>@{replyingTo} </span>
                 {editedComment}
               </div>
             ) : (
@@ -157,16 +132,14 @@ export const Comment = ({
 
       {replyMode && (
         <div className={styles.replyInputContainer}>
-          <img
-            src={currentUserImage.png}
-            alt="userImage"
-            className={styles.profileImage}
-          />
-          <textarea
-            className={styles.input}
-            style={{ marginTop: "0px" }}
+          <UserImage image={currentUserImage.png} alt="userImage" />
+          <TextArea
             value={replyText}
-            onChange={handleReplyTextChange}
+            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+              setReplyText(event.target.value)
+            }
+            style={{ marginTop: "0px" }}
+            placeholder={`Replying to @${username}...`}
           />
           <MainButton
             type="button"
@@ -190,7 +163,7 @@ export const Comment = ({
               currentUser={currentUser}
               replyingTo={reply.replyingTo}
               replies={reply.replies}
-              onDelete={handleDelete}
+              onDelete={onDelete}
               onEdit={onEdit}
               onReply={onReply}
             />

@@ -1,7 +1,10 @@
-import { CommentsType, UserType } from "types";
 import styles from "./CommentInput.module.scss";
 import React, { useState } from "react";
+import { CommentsType, UserType } from "types";
 import { MainButton } from "components/MainButton";
+import { TextArea } from "components/TextArea";
+import { usePostComment } from "hooks/usePostComment"; // импортируем хук
+import { UserImage } from "components/UserImage";
 
 interface CommentInputProps extends UserType {
   onSubmit: (newComment: CommentsType) => void;
@@ -12,59 +15,23 @@ export const CommentInput = ({
   onSubmit,
   username,
 }: CommentInputProps) => {
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState<string>("");
+  const { postComment, loading, error } = usePostComment();
 
-  const fetchNewComment = async (event: React.FormEvent) => {
-    try {
-      event.preventDefault();
-
-      const randomId = Math.floor(Math.random() * 1000);
-
-      const newComment = {
-        id: randomId,
-        content: comment,
-        createdAt: new Date().toISOString(),
-        score: 0,
-        user: {
-          image: image,
-          username: username,
-        },
-        replies: [],
-      };
-
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/comments",
-        {
-          method: "POST",
-          body: JSON.stringify(newComment),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        onSubmit(newComment);
-        setComment("");
-      } else {
-        console.log("error");
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error.message);
-      }
-    }
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await postComment(comment, image, username, onSubmit);
+    setComment("");
   };
 
   return (
-    <form className={styles.commentInput} onSubmit={fetchNewComment}>
+    <form className={styles.commentInput} onSubmit={handleSubmit}>
       <div className={styles.userImageContainer}>
-        <img src={image.png} alt="userImage" className={styles.userImage} />
+        <UserImage image={image.png} alt="userImage" inputImage />
       </div>
       <div className={styles.inputContainer}>
-        <textarea
+        <TextArea
           placeholder="Add a comment..."
-          className={styles.input}
           value={comment}
           onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
             setComment(event.target.value)
@@ -72,8 +39,13 @@ export const CommentInput = ({
         />
       </div>
       <div className={styles.sendButtonContainer}>
-        <MainButton mainButtonText="SEND" content={comment} type="submit" />
+        <MainButton
+          mainButtonText={loading ? "Sending..." : "Send"}
+          content={comment}
+          type="submit"
+        />
       </div>
+      {error && <p className={styles.error}>{error}</p>}
     </form>
   );
 };

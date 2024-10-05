@@ -1,0 +1,67 @@
+.ModalDelete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.ModalDeleteContainer {
+  width: 345px;
+  padding: 32px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.title {
+  margin: 0;
+  color: var(--Dark-Blue, #334253);
+  font-feature-settings: "liga" off, "clig" off;
+
+  /* Heading (L) */
+  font-family: Rubik;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.text {
+  padding-top: 20px;
+  margin: 0;
+  color: var(--Grayish-Blue, #67727e);
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+}
+
+.buttonsContainer {
+  padding-top: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+}
+
+.modalButton {
+  width: 161px;
+  height: 48px;
+
+  border-radius: 8px;
+  background: var(--Soft-Red, #ed6368);
+  border: none;
+  color: var(--White, #fff);
+  text-align: center;
+  font-family: Rubik;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 150% */
+  cursor: pointer;
+}
