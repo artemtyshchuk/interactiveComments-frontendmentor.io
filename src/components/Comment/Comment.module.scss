@@ -157,7 +157,7 @@
 
 .replyInputContainer {
   display: grid;
-  grid-template-columns: 4% 1fr 12%;
+  grid-template-columns: auto 1fr auto;
   column-gap: 16px;
   margin-top: 20px;
   border-radius: 8px;
@@ -254,6 +254,7 @@
   }
 
   .sendButtonContainer {
+    justify-self: end;
     grid-row: 2/3;
   }
 }

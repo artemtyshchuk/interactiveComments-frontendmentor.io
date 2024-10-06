@@ -1,6 +1,6 @@
 .commentInput {
   display: grid;
-  grid-template-columns: auto 1fr 12%;
+  grid-template-columns: auto 1fr auto;
   column-gap: 16px;
   padding: 24px;
   align-items: start;
@@ -14,7 +14,7 @@
   //577
   .commentInput {
     display: grid;
-    grid-template-columns: auto 1fr 20%;
+    grid-template-columns: auto 1fr auto;
     column-gap: 16px;
     padding: 18px;
     align-items: start;
@@ -50,6 +50,7 @@
   }
 
   .sendButtonContainer {
+    justify-self: end;
     grid-row: 2/3;
   }
 }
