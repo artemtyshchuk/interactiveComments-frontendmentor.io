@@ -65,3 +65,30 @@
   line-height: 24px; /* 150% */
   cursor: pointer;
 }
+
+@media (max-width: 576px) {
+  .ModalDeleteContainer {
+    width: 70%;
+
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 8px;
+  }
+
+  .modalButton {
+    width: 161px;
+    height: 48px;
+
+    border-radius: 8px;
+    background: var(--Soft-Red, #ed6368);
+    border: none;
+    color: var(--White, #fff);
+    text-align: center;
+    font-family: Rubik;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 150% */
+    cursor: pointer;
+  }
+}

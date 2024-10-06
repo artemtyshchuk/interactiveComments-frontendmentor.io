@@ -5,7 +5,6 @@
   border-radius: 8px;
   border: none;
   background: var(--Moderate-Blue, #5357b6);
-
   color: var(--White, #fff);
   font-feature-settings: "liga" off, "clig" off;
 
@@ -17,9 +16,17 @@
   line-height: 24px; /* 150% */
   text-transform: uppercase;
   cursor: pointer;
+}
 
-  &:hover {
+@media (hover: hover) {
+  .mainButton:hover {
     transition: 0.3s;
     opacity: 0.8;
+  }
+}
+
+@media (hover: none) {
+  .mainButton {
+    opacity: 1;
   }
 }

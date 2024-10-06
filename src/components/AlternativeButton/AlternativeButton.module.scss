@@ -1,4 +1,3 @@
-
 .alternativeButton {
   border: none;
   background-color: transparent;
@@ -11,9 +10,18 @@
   font-weight: 500;
   line-height: 24px; /* 150% */
   cursor: pointer;
-  &:hover {
+}
+
+@media (hover: hover) {
+  .alternativeButton:hover {
     opacity: 0.5;
     transition: 0.3s;
+  }
+}
+
+@media (hover: none) {
+  .alternativeButton {
+    opacity: 1;
   }
 }
 

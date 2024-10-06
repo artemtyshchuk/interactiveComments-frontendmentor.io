@@ -1,12 +1,12 @@
 import { CommentsType, UserType } from "types";
 import styles from "./Comment.module.scss";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MainButton } from "components/MainButton";
-import { AlternativeButton } from "components/AlternativeButton";
 import { VoteButton } from "components/VoteButton";
 import { TextArea } from "components/TextArea";
 import { UserImage } from "components/UserImage";
 import { ModalDelete } from "components/ModalDelete";
+import { ReplyButtons } from "./ReplyButtons";
 
 interface CommentProps extends CommentsType {
   currentUser: UserType;
@@ -39,6 +39,23 @@ export const Comment = ({
   const [replyMode, setReplyMode] = useState<boolean>(false);
   const [replyText, setReplyText] = useState<string>("");
   const [modalDelete, setModalDelete] = useState<boolean>(false);
+  const [smallScreen, setSmallScreen] = useState({
+    mobileScreen: window.matchMedia("(max-width: 768px)").matches,
+  });
+
+  useEffect(() => {
+    window.matchMedia("(max-width: 768px)").addEventListener("change", (e) => {
+      setSmallScreen({ mobileScreen: e.matches });
+    });
+
+    return () => {
+      window
+        .matchMedia("(max-width: 768px)")
+        .removeEventListener("change", (e) => {
+          setSmallScreen({ mobileScreen: e.matches });
+        });
+    };
+  }, []);
 
   const handleVote = () => {
     setScoreState((prevScore) => (voted ? prevScore - 1 : prevScore + 1));
@@ -65,10 +82,23 @@ export const Comment = ({
         />
       )}
       <div className={styles.comment}>
-        <div className={styles.scoreContainer}>
-          <VoteButton content="+" onClick={handleVote} voted={voted} />
-          <p className={styles.score}>{scoreState}</p>
-          <VoteButton content="-" onClick={handleVote} voted={!voted} />
+        <div className={styles.headerContainer}>
+          <div className={styles.scoreContainer}>
+            <VoteButton content="+" onClick={handleVote} voted={voted} />
+            <p className={styles.score}>{scoreState}</p>
+            <VoteButton content="-" onClick={handleVote} voted={!voted} />
+          </div>
+          {smallScreen.mobileScreen && (
+            <ReplyButtons
+              username={username}
+              currentUserUsername={currentUserUsername}
+              setModalDelete={setModalDelete}
+              setEditMode={setEditMode}
+              setReplyMode={setReplyMode}
+              editMode={editMode}
+              replyMode={replyMode}
+            />
+          )}
         </div>
 
         <div className={styles.headerCommentContainer}>
@@ -81,23 +111,15 @@ export const Comment = ({
             <p className={styles.createdAt}>{createdAt}</p>
           </div>
           <div className={styles.replyButtonContainer}>
-            {username === currentUserUsername ? (
-              <>
-                <AlternativeButton
-                  AlternativeButtonText="Delete"
-                  onClick={() => setModalDelete(true)}
-                />
-                <AlternativeButton
-                  AlternativeButtonText="Edit"
-                  onClick={() => setEditMode((prevState) => !prevState)}
-                />
-              </>
-            ) : (
-              <AlternativeButton
-                AlternativeButtonText="Reply"
-                onClick={() => setReplyMode((prevState) => !prevState)}
-              />
-            )}
+            <ReplyButtons
+              username={username}
+              currentUserUsername={currentUserUsername}
+              setModalDelete={setModalDelete}
+              setEditMode={setEditMode}
+              setReplyMode={setReplyMode}
+              editMode={editMode}
+              replyMode={replyMode}
+            />
           </div>
 
           <div className={styles.contentCommentContainer}>
@@ -132,21 +154,29 @@ export const Comment = ({
 
       {replyMode && (
         <div className={styles.replyInputContainer}>
-          <UserImage image={currentUserImage.png} alt="userImage" />
-          <TextArea
-            value={replyText}
-            onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setReplyText(event.target.value)
-            }
-            style={{ marginTop: "0px" }}
-            placeholder={`Replying to @${username}...`}
-          />
-          <MainButton
-            type="button"
-            onClick={handleReplySubmit}
-            mainButtonText="Reply"
-            content={replyText}
-          />
+          <div className={styles.userImageContainer}>
+            <UserImage image={currentUserImage.png} alt="userImage" />
+          </div>
+
+          <div className={styles.inputContainer}>
+            <TextArea
+              value={replyText}
+              onChange={(event: React.ChangeEvent<HTMLTextAreaElement>) =>
+                setReplyText(event.target.value)
+              }
+              style={{ marginTop: "0px" }}
+              placeholder={`Replying to @${username}...`}
+            />
+          </div>
+
+          <div className={styles.sendButtonContainer}>
+            <MainButton
+              type="button"
+              onClick={handleReplySubmit}
+              mainButtonText="Reply"
+              content={replyText}
+            />
+          </div>
         </div>
       )}
 

@@ -6,9 +6,18 @@
   font-weight: 500;
   padding: 0 8px;
   cursor: pointer;
-  &:hover {
+}
+
+@media (hover: hover) {
+  .voteButton:hover {
     color: #5357b6;
     transition: 0.3s;
+  }
+}
+
+@media (hover: none) {
+  .voteButton {
+    color: #c5c6ef;
   }
 }
 

@@ -1,6 +1,6 @@
 import styles from "./CommentsList.module.scss";
 import { Comment } from "components/Comment/Comment";
-import { CommentInput } from "components/CommentInput";
+import { CommentInputSection } from "components/CommentInputSection";
 import { formatDistanceToNow } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { useFetchComments } from "hooks/useFetchComments";
@@ -133,7 +133,7 @@ export const CommentsList = () => {
         );
       })}
       <div>
-        <CommentInput
+        <CommentInputSection
           image={currentUser.image}
           username={currentUser.username}
           onSubmit={handleNewCommentSubmit}
