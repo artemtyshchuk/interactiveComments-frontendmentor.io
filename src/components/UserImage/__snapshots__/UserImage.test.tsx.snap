@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserImage should render correctly 1`] = `
+<img
+  alt="alt"
+  class="userImageReply"
+  src="image"
+/>
+`;

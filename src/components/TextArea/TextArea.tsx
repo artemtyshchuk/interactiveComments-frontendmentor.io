@@ -15,6 +15,7 @@ export const TextArea = ({
 }: TextAreaProps) => {
   return (
     <textarea
+      data-testid="textArea"
       placeholder={placeholder}
       className={styles.input}
       value={value}

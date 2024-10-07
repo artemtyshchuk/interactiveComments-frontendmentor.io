@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextArea should render correctly 1`] = `
+<textarea
+  class="input"
+  data-testid="textArea"
+  placeholder="test"
+  style="margin: 0px;"
+>
+  Test
+</textarea>
+`;
